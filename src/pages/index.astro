@@ -1,11 +1,87 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const colores = ["Rojo", "Verde", "Blanco", "Amarillo", "Azul"]
+const nacionalidades = ["Británico", "Sueco", "Danés", "Noruego", "Alemán"]
+const bebidas = ["Agua", "Té", "Leche", "Cerveza", "Café"]
+const mascotas = ["Gato", "Perro", "Pájaro", "Pez", "Caballo"]
+const cigarros = ["Pall Mall", "Dunhill", "BlueMaster", "Prince", "Blends"]
+
+const pistas = [
+	"El británico vive en la casa roja." ,
+	"El sueco tiene un perro como mascota." ,
+	"El danés toma té." ,
+	"El noruego vive en la primera casa." ,
+	"El alemán fuma Prince." ,
+	"La casa verde está inmediatamente a la izquierda de la blanca." ,
+	"El dueño de la casa verde bebe café." ,
+	"El propietario que fuma Pall Mall cría pájaros." ,
+	"El dueño de la casa amarilla fuma Dunhill." ,
+	"El hombre que vive en la casa del centro bebe leche." ,
+	"El vecino que fuma Blends vive al lado del que tiene un gato." ,
+	"El hombre que tiene un caballo vive al lado del que fuma Dunhill." ,
+	"El propietario que fuma Bluemaster toma cerveza." ,
+	"El vecino que fuma Blends viveal lado del que toma agua." ,
+	"El noruego vive al lado de la casa azul."
+]
+
 ---
 
 <Layout>
-	<Welcome />
+	<section class="my-10">
+		<div class="flex flex-col items-center justify-center text-center w-full max-w-xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+			<h1 class="font-bold text-4xl">ACERTIJO DE EINSTEIN</h1>
+			<h4 class="font-semibold text-xl">¿ Serás Capaz de resolverlo ?</h4>
+		</div>
+	</section>
+
+	<section class="my-10">
+		<div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+			<h1 class="font-bold text-2xl">¿ Como Resolverlo ?</h1>
+			<p> Para resolverlo, tendrás 15 pistas, cada una de ellas te dará una relación que se debe cumplir. Al finalizar todas ellas deberás tener información suficiente para resolver el acertijo</p>
+		</div>
+	</section>
+
+	<section class="my-10">
+		<div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+			<h1 class="font-bold text-2xl">PISTAS</h1>
+			<div class="text-left w-full">
+				{pistas.map((pista, posicion) => (
+					<div class="flex items-center gap-2 my-2" id={`pista-${posicion}`}>
+						<button
+							id= {`boton-pista-${posicion}`}
+							type="button"
+							class="px-2 py-1 border border-gray-400 rounded bg-green-300 hover:bg-green-400"
+							onclick={`togglePista(${posicion})`}
+						>
+							<p id={`estado-${posicion}`}>✓</p>
+						</button>
+						<p id={`texto-pista-${posicion}`} class="text-left font-normal text-lg">
+							{posicion + 1}. {pista}
+						</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+	<script>
+		const togglePista = (posicion: number) => {
+			const boton = document.getElementById(`boton-pista-${posicion}`);
+			const textoPista = document.getElementById(`texto-pista-${posicion}`);
+			const checkIcon = document.getElementById(`estado-${posicion}`);
+			if (!textoPista || !checkIcon || !boton) return;
+			textoPista.classList.toggle('line-through');
+			textoPista.classList.toggle('opacity-50');
+			const isChecked = textoPista.classList.contains('line-through');
+			if (isChecked) {
+				checkIcon.innerHTML = 'X';
+			} else {
+				checkIcon.innerHTML = '✓';
+			}
+			const bgColor = isChecked ? 'bg-red-300 hover:bg-red-400' : 'bg-green-300 hover:bg-green-400';
+			boton.classList.remove('bg-red-300', 'hover:bg-red-400', 'bg-green-300', 'hover:bg-green-400');
+			boton.classList.add(...bgColor.split(' '));
+		};
+		(window as any).togglePista = togglePista;
+	</script>
 </Layout>
