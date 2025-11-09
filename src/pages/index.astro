@@ -2,183 +2,364 @@
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 
-const colores = ["🟥 Rojo", "🟩 Verde", "⬜ Blanco", "🟨 Amarillo", "🟦 Azul"];
-const nacionalidades = ["🇬🇧 Británico", "🇸🇪 Sueco", "🇩🇰 Danés", "🇳🇴 Noruego", "🇩🇪 Alemán"];
-const bebidas = ["💧 Agua", "🫖 Té", "🥛 Leche", "🍺 Cerveza", "☕ Café"];
-const mascotas = ["🐈 Gato", "🐕 Perro", "🐦‍⬛ Pájaro", "🐟 Pez", "🐎 Caballo"];
-const cigarros = ["🏬 Pall Mall", "🚬 Dunhill", "🔹 Blue Master", "🤴 Prince", "♾️ Blends"];
+const colores = ["🟥 Rojo", "🟩 Verde", "⬜ Blanco", "🟨 Amarillo", "🟦 Azul", "limpiar"];
+const nacionalidades = ["🇬🇧 Británico", "🇸🇪 Sueco", "🇩🇰 Danés", "🇳🇴 Noruego", "🇩🇪 Alemán", "limpiar"];
+const bebidas = ["💧 Agua", "🫖 Té", "🥛 Leche", "🍺 Cerveza", "☕ Café", "limpiar"];
+const mascotas = ["🐈 Gato", "🐕 Perro", "🐦‍⬛ Pájaro", "🐟 Pez", "🐎 Caballo", "limpiar"];
+const cigarros = ["🏬 Pall Mall", "🚬 Dunhill", "🔹 Blue Master", "🤴 Prince", "♾️ Blends", "limpiar"];
 
 const pistas = [
-	"El británico vive en la casa roja." ,
-	"El sueco tiene un perro como mascota." ,
-	"El danés toma té." ,
-	"El noruego vive en la primera casa." ,
-	"El alemán fuma Prince." ,
-	"La casa verde está inmediatamente a la izquierda de la blanca." ,
-	"El dueño de la casa verde bebe café." ,
-	"El propietario que fuma Pall Mall cría pájaros." ,
-	"El dueño de la casa amarilla fuma Dunhill." ,
-	"El hombre que vive en la casa del centro bebe leche." ,
-	"El vecino que fuma Blends vive al lado del que tiene un gato." ,
-	"El hombre que tiene un caballo vive al lado del que fuma Dunhill." ,
-	"El propietario que fuma Bluemaster toma cerveza." ,
-	"El vecino que fuma Blends viveal lado del que toma agua." ,
-	"El noruego vive al lado de la casa azul."
+    "El británico vive en la casa roja." ,
+    "El sueco tiene un perro como mascota." ,
+    "El danés toma té." ,
+    "El noruego vive en la primera casa." ,
+    "El alemán fuma Prince." ,
+    "La casa verde está inmediatamente a la izquierda de la blanca." ,
+    "El dueño de la casa verde bebe café." ,
+    "El propietario que fuma Pall Mall cría pájaros." ,
+    "El dueño de la casa amarilla fuma Dunhill." ,
+    "El hombre que vive en la casa del centro bebe leche." ,
+    "El vecino que fuma Blends vive al lado del que tiene un gato." ,
+    "El hombre que tiene un caballo vive al lado del que fuma Dunhill." ,
+    "El propietario que fuma Bluemaster toma cerveza." ,
+    "El vecino que fuma Blends viveal lado del que toma agua." ,
+    "El noruego vive al lado de la casa azul."
 ];
 
-let VALORES = [
-	{color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
-	{color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
-	{color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
-	{color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
-	{color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""}
-];
-
-
+const colorMap: Record<string, string> = {
+    "🟥 Rojo": "bg-red-300",
+    "🟩 Verde": "bg-green-300",
+    "⬜ Blanco": "bg-white",
+    "🟨 Amarillo": "bg-yellow-300",
+    "🟦 Azul": "bg-blue-300",
+    "": "bg-gray-300"
+};
 ---
 
 <Layout>
-	<section class="my-10">
-		<div class="flex flex-col items-center justify-center text-center w-full max-w-xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
-			<h1 class="font-bold text-4xl">ACERTIJO DE EINSTEIN</h1>
-			<h4 class="font-semibold text-xl">¿ Serás Capaz de resolverlo ?</h4>
-		</div>
-	</section>
+    <section class="my-10">
+        <div class="flex flex-col items-center justify-center text-center w-full max-w-xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+            <h1 class="font-bold text-4xl">ACERTIJO DE EINSTEIN</h1>
+            <h4 class="font-semibold text-xl">¿ Serás Capaz de resolverlo ?</h4>
+        </div>
+    </section>
 
-	<section class="my-10">
-		<div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
-			<h1 class="font-bold text-2xl">¿ Como Resolverlo ?</h1>
-			<p> Para resolverlo, tendrás 15 pistas, cada una de ellas te dará una relación que se debe cumplir. Al finalizar todas ellas deberás tener información suficiente para resolver el acertijo</p>
-		</div>
-	</section>
+    <section class="my-10">
+        <div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+            <h1 class="font-bold text-2xl">¿ Como Resolverlo ?</h1>
+            <p> Para resolverlo, tendrás 15 pistas, cada una de ellas te dará una relación que se debe cumplir. Al finalizar todas ellas deberás tener información suficiente para resolver el acertijo</p>
+        </div>
+    </section>
 
-	<section class="my-10">
-		<div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
-			<h1 class="font-bold text-2xl">PISTAS</h1>
-			<div class="text-left w-full">
-				{pistas.map((pista, posicion) => (
-					<div class="flex items-center gap-8 my-2" id={`pista-${posicion}`}>
-						<button
-							id= {`boton-pista-${posicion}`}
-							type="button"
-							class="w-10 px-2 py-1 border border-gray-400 rounded bg-green-300 hover:bg-green-400 hover:scale-105 transition duration-150"
-							onclick={`togglePista(${posicion})`}
-						>
-							<p id={`estado-${posicion}`}>✓</p>
-						</button>
-						<p id={`texto-pista-${posicion}`} class="text-left font-normal text-lg hover:scale-105 transition duration-150">
-							{posicion + 1}. {pista}
-						</p>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
+    <section class="my-10">
+        <div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-50 shadow-xl">
+            <h1 class="font-bold text-2xl">PISTAS</h1>
+            <div class="text-left w-full">
+                {pistas.map((pista, posicion) => (
+                    <div class="flex items-center gap-8 my-2" id={`pista-${posicion}`}>
+                        <button
+                            id= {`boton-pista-${posicion}`}
+                            type="button"
+                            class="w-10 px-2 py-1 border border-gray-400 rounded bg-green-300 hover:bg-green-400 hover:scale-105 transition duration-150"
+                            onclick={`togglePista(${posicion})`}
+                        >
+                            <p id={`estado-${posicion}`}>✓</p>
+                        </button>
+                        <p id={`texto-pista-${posicion}`} class="text-left font-normal text-lg hover:scale-105 transition duration-150">
+                            {posicion + 1}. {pista}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
 
-	<section class="my-10">
-		<div class="flex flex-row gap-3 w-full items-center justify-between max-w-4xl mx-auto mb-6">
-			<div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
-				<h3 class="text-xl font-bold">Colores</h3>
-				<ul>
-					{
-						colores.map((color, posicion) => (
-							<li class="hover:scale-130 transition duration-150 hover:text-green-900">{`${color}`}</li>
-						))
-					}
-				</ul>
-			</div>
-			<div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
-				<h3 class="text-xl font-bold">Nacionalidades</h3>
-				<ul>
-					{
-						nacionalidades.map((nacionalidad, posicion) => (
-							<li class="hover:scale-130 transition duration-150 hover:text-green-900">{`${nacionalidad}`}</li>
-						))
-					}
-				</ul>
-			</div>
-			<div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
-				<h3 class="text-xl font-bold">Mascotas</h3>
-				<ul>
-					{
-						mascotas.map((mascota, posicion) => (
-							<li class="hover:scale-130 transition duration-150 hover:text-green-900">{`${mascota}`}</li>
-						))
-					}
-				</ul>
-			</div>
-			<div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
-				<h3 class="text-xl font-bold">Bebidas</h3>
-				<ul class="">
-					{
-						bebidas.map((bebida, posicion) => (
-							<li class="hover:scale-130 transition duration-150 hover:text-green-900">{`${bebida}`}</li>
-						))
-					}
-				</ul>
-			</div>
-			<div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
-				<h3 class="text-xl font-bold">Cigarros</h3>
-				<ul>
-					{
-						cigarros.map((cigarro, posicion) => (
-							<li class="hover:scale-130 transition duration-150 hover:text-green-900">{`${cigarro}`}</li>
-						))
-					}
-				</ul>
-			</div>
-		</div>
-	</section>
+        <section class="my-10">
+        <div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-200 shadow-xl" id="seccion-interactiva">
+            <h1 class="font-bold text-2xl">Zona Interactiva</h1>
+            <p>Realiza pruebas para poder decidir quien es el dueño del pez</p>
+            <div class="flex flex-row justify-between w-full mx-auto">
+                <button onclick="actualizarCasa(0)">
+                    <div class={`flex flex-col p-5 rounded-xl border border-gray-400 bg-gray-300`}>
+                        <p class="font-bold text-lg">Casa 1</p>
+                        <Icon name="house" width="100" height="100"/>
+                        <ul>
+                            <li id="nacionalidad-1">-</li>
+                            <li id="mascota-1">-</li>
+                            <li id="bebida-1">-</li>
+                            <li id="cigarro-1">-</li>
+                        </ul>
+                    </div>
+                </button>
+                <button onclick="actualizarCasa(1)">
+                    <div class={`flex flex-col p-5 rounded-xl border border-gray-400 bg-gray-300`}>
+                        <p class="font-bold text-lg">Casa 2</p>
+                        <Icon name="house" width="100" height="100"/>
+                        <ul>
+                            <li id="nacionalidad-2">-</li>
+                            <li id="mascota-2">-</li>
+                            <li id="bebida-2">-</li>
+                            <li id="cigarro-2">-</li>
+                        </ul>
+                    </div>
+                </button>
+                <button onclick="actualizarCasa(2)">
+                    <div class={`flex flex-col p-5 rounded-xl border border-gray-400 bg-gray-300`}>
+                        <p class="font-bold text-lg">Casa 3</p>
+                        <Icon name="house" width="100" height="100"/>
+                        <ul>
+                            <li id="nacionalidad-3">-</li>
+                            <li id="mascota-3">-</li>
+                            <li id="bebida-3">-</li>
+                            <li id="cigarro-3">-</li>
+                        </ul>
+                    </div>
+                </button>
+                <button onclick="actualizarCasa(3)">
+                    <div class={`flex flex-col p-5 rounded-xl border border-gray-400 bg-gray-300`}>
+                        <p class="font-bold text-lg">Casa 4</p>
+                        <Icon name="house" width="100" height="100"/>
+                        <ul>
+                            <li id="nacionalidad-4">-</li>
+                            <li id="mascota-4">-</li>
+                            <li id="bebida-4">-</li>
+                            <li id="cigarro-4">-</li>
+                        </ul>
+                    </div>
+                </button>
+                <button onclick="actualizarCasa(4)">
+                    <div class={`flex flex-col p-5 rounded-xl border border-gray-400 bg-gray-300`}>
+                        <p class="font-bold text-lg">Casa 5</p>
+                        <Icon name="house" width="100" height="100"/>
+                        <ul>
+                            <li id="nacionalidad-5">-</li>
+                            <li id="mascota-5">-</li>
+                            <li id="bebida-5">-</li>
+                            <li id="cigarro-5">-</li>
+                        </ul>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
 
-	<section class="my-10 pb-20">
-		<div class="flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto border border-gray-300 rounded-lg p-10 gap-6 py-6 bg-gray-200 shadow-xl">
-			<h1 class="font-bold text-2xl">Zona Interactiva</h1>
-			<p>Realiza pruebas para poder decidir quien es el dueño del pez</p>
-			<div class="flex flex-row justify-between w-full mx-auto">
-				{
-					VALORES.map((casa, index) => (
-						<div class={`flex flex-col p-5 rounded-xl border border-gray-400 ${
-							casa.color === "🟥 Rojo" ? "bg-red-300" : 
-							casa.color === "🟩 Verde" ? "bg-green-300" : 
-							casa.color === "⬜ Blanco" ? "bg-white" : 
-							casa.color === "🟨 Amarillo" ? "bg-yellow-300" : 
-							casa.color === "🟦 Azul" ? "bg-blue-300" : 
-							"bg-gray-300"
-						}`}>
-							<p class="font-bold text-lg">Casa {index}</p>
-							<Icon name="house" width="100" height="100"/>
-							<ul>
-								<li>- {casa.nacionalidad}</li>
-								<li>- {casa.mascota}</li>
-								<li>- {casa.bebida}</li>
-								<li>- {casa.cigarro}</li>
-							</ul>
-						</div>
-					))
+    <section class="my-10 pb-20">
+        <div class="flex flex-row gap-3 w-full items-center justify-between max-w-4xl mx-auto mb-6">
+            <div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
+                <h3 class="text-xl font-bold">Colores</h3>
+                <div class="flex flex-col gap-2">
+                    {
+                        colores.map((color) => (
+                            <button onclick={`seleccionar('color', '${color}')`}>
+                                <p class="hover:scale-130 transition duration-150 hover:text-green-900">{`${color}`}</>
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
+                <h3 class="text-xl font-bold">Nacionalidades</h3>
+                <div class="flex flex-col gap-2">
+                    {
+                        nacionalidades.map((nacionalidad) => (
+                            <button onclick={`seleccionar('nacionalidad', '${nacionalidad}')`}>
+                                <p class="hover:scale-130 transition duration-150 hover:text-green-900">{`${nacionalidad}`}</>
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
+                <h3 class="text-xl font-bold">Mascotas</h3>
+                <div class="flex flex-col gap-2">
+                    {
+                        mascotas.map((mascota) => (
+                            <button onclick={`seleccionar('mascota', '${mascota}')`}>
+                                <p class="hover:scale-130 transition duration-150 hover:text-green-900">{`${mascota}`}</p>
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
+                <h3 class="text-xl font-bold">Bebidas</h3>
+                <div class="flex flex-col gap-2">
+                    {
+                        bebidas.map((bebida) => (
+                            <button onclick={`seleccionar('bebida', '${bebida}')`}>
+                                <p class="hover:scale-130 transition duration-150 hover:text-green-900">{`${bebida}`}</p>
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col border border-gray-300 p-5 rounded-xl text-center gap-2 shadow-lg">
+                <h3 class="text-xl font-bold">Cigarros</h3>
+                <div class="flex flex-col gap-2">
+                    {
+                        cigarros.map((cigarro) => (
+                            <button onclick={`seleccionar('cigarro', '${cigarro}')`}>
+                                <p class="hover:scale-130 transition duration-150 hover:text-green-900">{`${cigarro}`}</p>
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let ultimaNacionalidad = "";
+        let ultimaMascota = "";
+        let ultimaBebida = "";
+        let ultimoCigarro = "";
+        let ultimoColor = "";
+        
+        const colorMap: Record<string, string> = {
+            "🟥 Rojo": "bg-red-300",
+            "🟩 Verde": "bg-green-300",
+            "⬜ Blanco": "bg-white",
+            "🟨 Amarillo": "bg-yellow-300",
+            "🟦 Azul": "bg-blue-300",
+            "": "bg-gray-300" // Color por defecto
+        };
+        let valores = [
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""}
+        ];
+        const seleccionar = (tipo: string, valor: string) => {
+            switch(tipo) {
+                case 'nacionalidad':
+                    ultimaNacionalidad = valor;
+                    break;
+                case 'mascota':
+                    ultimaMascota = valor;
+                    break;
+                case 'bebida':
+                    ultimaBebida = valor;
+                    break;
+                case 'cigarro':
+                    ultimoCigarro = valor;
+                    break;
+                case 'color':
+                    ultimoColor = valor;
+                    break;
+            }
+        };
+        const actualizarCasa = (indexCasa: number) => {
+            if (indexCasa < 0 || indexCasa >= valores.length) {
+                console.error("Índice de casa fuera de rango.");
+                return;
+            }
+
+            const casa = valores[indexCasa];
+            if (ultimoColor) {
+				if (ultimoColor === "limpiar"){
+					casa.color = "";
+				} else {
+					casa.color = ultimoColor;
 				}
-			</div>
-		</div>
-	</section>
+                ultimoColor = "";
+            }
 
+            if (ultimaNacionalidad) {
+				if (ultimaNacionalidad === "limpiar"){
+					casa.nacionalidad = "";
+				} else {
+					casa.nacionalidad = ultimaNacionalidad;
+				}
+                ultimaNacionalidad = "";
+            }
+            if (ultimaMascota) {
+				if (ultimaMascota === "limpiar"){
+					casa.mascota = "";
+				} else {
+					casa.mascota = ultimaMascota;
+				}
+                ultimaMascota = "";
+            }
+            if (ultimaBebida) {
+				if (ultimaBebida === "limpiar"){
+					casa.bebida = "";
+				} else {
+					casa.bebida = ultimaBebida;
+				}
+                ultimaBebida = "";
+            }
+            if (ultimoCigarro) {
+				if (ultimoCigarro === "limpiar"){
+					casa.cigarro = "";
+				} else {
+					casa.cigarro = ultimoCigarro;
+				}
+                ultimoCigarro = "";
+            }
 
-	<script>
-		const togglePista = (posicion: number) => {
-			const boton = document.getElementById(`boton-pista-${posicion}`);
-			const textoPista = document.getElementById(`texto-pista-${posicion}`);
-			const checkIcon = document.getElementById(`estado-${posicion}`);
-			if (!textoPista || !checkIcon || !boton) return;
-			textoPista.classList.toggle('line-through');
-			textoPista.classList.toggle('opacity-50');
-			const isChecked = textoPista.classList.contains('line-through');
-			if (isChecked) {
-				checkIcon.innerHTML = 'X';
-			} else {
-				checkIcon.innerHTML = '✓';
-			}
-			const bgColor = isChecked ? 'bg-red-300 hover:bg-red-400' : 'bg-green-300 hover:bg-green-400';
-			boton.classList.remove('bg-red-300', 'hover:bg-red-400', 'bg-green-300', 'hover:bg-green-400');
-			boton.classList.add(...bgColor.split(' '));
-		};
-		(window as any).togglePista = togglePista;
-	</script>
+            actualizarVista();
+        };
+        const actualizarVista = () => {
+            const svgCasa = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`
+            const zonaInteractiva = document.getElementById("seccion-interactiva");
+            if (!zonaInteractiva) return;
+            let textoZona = `
+            <h1 class="font-bold text-2xl">Zona Interactiva</h1>
+            <p>Realiza pruebas para poder decidir quien es el dueño del pez</p>
+            <div class="flex flex-row justify-between w-full mx-auto">
+            `;
+
+            valores.forEach((casa, index) => {
+                const bg_class = colorMap[casa.color] || "bg-gray-300";
+
+                textoZona += `
+                    <button onclick="actualizarCasa(${index})">
+                    <div class="flex flex-col p-5 rounded-xl border border-gray-400 ${bg_class}">
+                        <p class="font-bold text-lg">Casa ${index+1}</p>
+                        ${svgCasa}
+                        <ul>
+                            <li>${casa.nacionalidad || '-'}</li>
+                            <li>${casa.mascota || '-'}</li>
+                            <li>${casa.bebida || '-'}</li>
+                            <li>${casa.cigarro || '-'}</li>
+                        </ul>
+                    </div>
+                    </button>
+                    `;
+            })
+            textoZona += "</div>"
+            zonaInteractiva.innerHTML=textoZona;
+        }
+        var VALORES = [
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""},
+            {color: "", nacionalidad: "", bebida: "", mascota: "", cigarro:""}
+        ];
+        (window as any).actualizarCasa = actualizarCasa;
+        (window as any).seleccionar = seleccionar;
+        
+        const togglePista = (posicion: number) => {
+            const boton = document.getElementById(`boton-pista-${posicion}`);
+            const textoPista = document.getElementById(`texto-pista-${posicion}`);
+            const checkIcon = document.getElementById(`estado-${posicion}`);
+            if (!textoPista || !checkIcon || !boton) return;
+            textoPista.classList.toggle('line-through');
+            textoPista.classList.toggle('opacity-50');
+            const isChecked = textoPista.classList.contains('line-through');
+            if (isChecked) {
+                checkIcon.innerHTML = 'X';
+            } else {
+                checkIcon.innerHTML = '✓';
+            }
+            const bgColor = isChecked ? 'bg-red-300 hover:bg-red-400' : 'bg-green-300 hover:bg-green-400';
+            boton.classList.remove('bg-red-300', 'hover:bg-red-400', 'bg-green-300', 'hover:bg-green-400');
+            boton.classList.add(...bgColor.split(' '));
+        };
+        (window as any).togglePista = togglePista;
+        
+        actualizarVista();
+    </script>
 </Layout>
